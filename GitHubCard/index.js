@@ -3,6 +3,11 @@
            https://api.github.com/users/<your name>
 */
 
+// let data = axios.get('https://api.github.com/users/cobrettie')
+//   .then(response => {
+//     console.log(response);
+//   })
+
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -13,6 +18,13 @@
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
 */
+
+let cardContainer = document.querySelector('.cards');
+let data = axios.get('https://api.github.com/users/cobrettie')
+  .then(response => {
+    cardContainer.appendChild(componentCreator(response.data));
+    console.log(response);
+  })
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
           follow this link in your browser https://api.github.com/users/<Your github name>/followers 
@@ -45,6 +57,52 @@ const followersArray = [];
 </div>
 
 */
+
+const componentCreator = (obj) => {
+  // create elements
+  let mainCardDiv = document.createElement('div');
+  let cardImg  = document.createElement('img');
+  let cardInfoDiv = document.createElement('div');
+  let nameH3 = document.createElement('h3');
+  let usernameP = document.createElement('p');
+  let locationP = document.createElement('p');
+  let profileP = document.createElement('p');
+  let profileATag = document.createElement('a');
+  let userFollowersP = document.createElement('p');
+  let userFollowingP = document.createElement('p');
+  let bioP = document.createElement('p');
+
+  // append children
+  mainCardDiv.appendChild(cardImg);
+  mainCardDiv.appendChild(cardInfoDiv);
+  cardInfoDiv.appendChild(nameH3);
+  cardInfoDiv.appendChild(usernameP);
+  cardInfoDiv.appendChild(locationP);
+  cardInfoDiv.appendChild(profileP);
+  cardInfoDiv.appendChild(userFollowersP);
+  cardInfoDiv.appendChild(userFollowingP);
+  cardInfoDiv.appendChild(bioP);
+  profileP.appendChild(profileATag);
+
+  // add classes to elements
+  mainCardDiv.classList.add('card');
+  cardInfoDiv.classList.add('card-info');
+  nameH3.classList.add('name');
+  usernameP.classList.add('username');
+
+  // add content to elements
+  cardImg.src = obj.avatar_url;
+  nameH3.textContent = obj.name;
+  usernameP.textContent = obj.login;
+  locationP.textContent = obj.location;
+  profileATag.href = obj.url;
+  profileATag.textContent = obj.url;
+  userFollowersP.textContent = `${obj.followers} Followers`;
+  userFollowingP.textContent = `${obj.following} Following`;
+  bioP.textContent = obj.bio;
+
+  return mainCardDiv;
+}
 
 /* List of LS Instructors Github username's: 
   tetondan
