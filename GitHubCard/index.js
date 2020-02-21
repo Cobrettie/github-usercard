@@ -1,20 +1,3 @@
-/* Step 1: using axios, send a GET request to the following URL 
-           (replacing the palceholder with your Github name):
-           https://api.github.com/users/<your name>
-*/
-
-// let data = axios.get('https://api.github.com/users/cobrettie')
-//   .then(response => {
-//     console.log(response);
-//   })
-
-/* Step 2: Inspect and study the data coming back, this is YOUR 
-   github info! You will need to understand the structure of this 
-   data in order to use it to build your component function 
-
-   Skip to Step 3.
-*/
-
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
 */
@@ -84,6 +67,10 @@ const componentCreator = (obj) => {
   let userFollowersP = document.createElement('p');
   let userFollowingP = document.createElement('p');
   let bioP = document.createElement('p');
+  let expandBtn = document.createElement('button');
+  let publicRepos = document.createElement('p');
+  let publicReposUrl = document.createElement('p');
+  let hireable = document.createElement('p');
 
   // append children
   mainCardDiv.appendChild(cardImg);
@@ -95,6 +82,7 @@ const componentCreator = (obj) => {
   cardInfoDiv.appendChild(userFollowersP);
   cardInfoDiv.appendChild(userFollowingP);
   cardInfoDiv.appendChild(bioP);
+  cardInfoDiv.appendChild(expandBtn);
   profileP.appendChild(profileATag);
 
   // add classes to elements
@@ -102,6 +90,7 @@ const componentCreator = (obj) => {
   cardInfoDiv.classList.add('card-info');
   nameH3.classList.add('name');
   usernameP.classList.add('username');
+  expandBtn.classList.add('expandBtn');
 
   // add content to elements
   cardImg.src = obj.avatar_url;
@@ -113,6 +102,37 @@ const componentCreator = (obj) => {
   userFollowersP.textContent = `${obj.followers} Followers`;
   userFollowingP.textContent = `${obj.following} Following`;
   bioP.textContent = obj.bio;
+  expandBtn.textContent = 'Click for more';
+  publicRepos.textContent = `Public repos: ${obj.public_repos}`;
+  publicReposUrl.textContent = `Public repos url: ${obj.repos_url}`;
+  hireable.textContent = `Hireable? ${obj.hireable}`;
+
+  // event listeners
+  expandBtn.addEventListener('click', () => {
+    mainCardDiv.classList.toggle('card-open');
+    closeCardChangingText();
+    extraCardInfo();
+  })
+
+  function closeCardChangingText() {
+    if (mainCardDiv.classList.contains('card-open')) {
+      expandBtn.textContent = 'Click for less';
+    } else {
+      expandBtn.textContent = 'Click for more';
+    }
+  }
+
+  function extraCardInfo() {
+    if (mainCardDiv.classList.contains('card-open')) {
+      cardInfoDiv.appendChild(publicRepos);
+      cardInfoDiv.appendChild(publicReposUrl);
+      cardInfoDiv.appendChild(hireable);
+    } else {
+      publicRepos.remove();
+      publicReposUrl.remove();
+      hireable.remove();
+    }
+  }
 
   return mainCardDiv;
 }

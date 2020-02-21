@@ -123,5 +123,19 @@ body {
   margin: 3px 0 10px;
 }
 
+.expandBtn {
+  position: absolute;
+  /* bottom: 0; */
+  left: 50%;
+  font-size: 12px;
+  cursor: pointer;
+  transform: translate(-50%);
+  background-color: white;
+}
+
+.card-open {
+  height: 400px;
+}
+
 
 
