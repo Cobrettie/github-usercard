@@ -84,14 +84,16 @@ const componentCreator = (obj) => {
     mainCardDiv.classList.toggle('card-open');
     closeCardChangingText();
     extraCardInfo();
-    new GitHubCalendar('.calendar', 'cobrettie');
+    // new GitHubCalendar('.calendar', 'cobrettie');
   })
 
   function closeCardChangingText() {
     if (mainCardDiv.classList.contains('card-open')) {
       expandBtn.textContent = 'Click for less';
+      expandBtn.classList.add('lowerExpandBtn');
     } else {
       expandBtn.textContent = 'Click for more';
+      expandBtn.classList.remove('lowerExpandBtn');
     }
   }
 
